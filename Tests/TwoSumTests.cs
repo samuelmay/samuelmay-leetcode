@@ -6,10 +6,10 @@ namespace Tests
 {
     public class TwoSumTests
     {
-        private TwoSumSolver solution;
+        private TwoSumSolution solution;
         public TwoSumTests()
         {
-            solution = new TwoSumSolver();
+            solution = new TwoSumSolution();
         }
 
         [SetUp]

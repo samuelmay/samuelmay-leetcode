@@ -1,6 +1,6 @@
 ﻿namespace LeetCode
 {
-    public class TwoSumSolver
+    public class TwoSumSolution
     {
 
         public int[] TwoSum(int[] nums, int target) {
