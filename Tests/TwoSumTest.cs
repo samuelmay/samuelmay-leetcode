@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace Tests
 {
-    public class TwoSumTests
+    public class TwoSumTest
     {
         private TwoSumSolution solution;
-        public TwoSumTests()
+        public TwoSumTest()
         {
             solution = new TwoSumSolution();
         }
