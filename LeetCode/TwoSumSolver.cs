@@ -10,7 +10,11 @@
             nums.CopyTo(sortedNums,0);
             Array.Sort(sortedNums);
 
-            // iterate backwards from highest number until we have a number that is less than target
+            // There might be some optimization still to be done here.
+            // Both the inner and outer loops could probably
+            // be terminated early based on some other tests.
+
+            // iterate backwards from highest number
             for (int i = (sortedNums.Length - 1); i > 0; i--)
             {
                 // in inner loop, iterate forwards from lowest number, calcuate sums until target is equaled
