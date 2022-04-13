@@ -5,3 +5,5 @@
 *.csproj.user
 *.pubxml.user
 */.config/*
+Rust/**/*.exe
+Rust/**/*.pdb
