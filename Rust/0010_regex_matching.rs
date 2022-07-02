@@ -68,6 +68,7 @@ fn compile(pattern: String) -> (usize, Box<dyn Fn(usize,char) -> usize>) {
 		current_state += 1;
 	}
 	
+		
 	let final_state = current_state;
 	let delta_function = Box::new(move |q : usize, i : char| {
 		return state_transitions[q](i);
@@ -76,11 +77,18 @@ fn compile(pattern: String) -> (usize, Box<dyn Fn(usize,char) -> usize>) {
 	return (final_state,delta_function);
 }
 fn is_match(s: String, p: String) -> bool {
-	let (end_state,delta) = compile(p);
-	let mut s_terminated : Vec<char> = s.chars().collect();
-	s_terminated.push('\0');
+	// we want to match the exact string length but I had already
+	// gone the whole hog for partial matching so this is a quick hack
+	// to fix it. We are already adding a '\0' null terminator to every
+	// string given.
+	let mut s_terminated = s.clone();
+	s_terminated.push('\0'); 
+	let mut p_terminated = p.clone();
+	p_terminated.push('\0');
+	
+	let (end_state,delta) = compile(p_terminated);
 	let mut q = 0;
-	for i in s_terminated {
+	for i in s_terminated.chars() {
 		q = delta(q,i);
 		if q == end_state {
 			return true;
@@ -90,8 +98,8 @@ fn is_match(s: String, p: String) -> bool {
 }
 
 fn main() {
-	let examples = vec!["driveme","sata drive","attttt","bbbba"];
-	let pattern = "a*dr";
+	let examples = vec!["baab","bbc","","bb"];
+	let pattern = "ba*b";
 
 	for example in examples {
 		let p = String::from(pattern);
