@@ -35,8 +35,12 @@ impl<'a> Iterator for NextStates<'a> {
 			let transition_num = self.current_transition_index.unwrap();
 			let transition = &self.automata.transitions[transition_num];
 			self.current_transition_index = transition.next_outgoing_transition;
-			if transition.match_symbol == self.symbol {
-				return Some(transition.target);
+			match (self.symbol, transition.match_symbol) {
+				('*','*') => return Some(transition.target),
+				('*',_) => continue,
+				(_,'.') => return Some(transition.target), // dot matches any symbol
+                (_,_) if transition.match_symbol == self.symbol => return Some(transition.target),
+				(_,_) => continue
 			}
 		}
 	}
@@ -126,8 +130,8 @@ fn is_match(s: String, p: String) -> bool {
 }
 
 fn main() {
-	let examples = vec!["aaa","","abc"];
-	let pattern = "abc";
+	let examples = vec!["aaa","","abc","axc"];
+	let pattern = "a.c";
 
 	for example in examples {
 		let p = String::from(pattern);
