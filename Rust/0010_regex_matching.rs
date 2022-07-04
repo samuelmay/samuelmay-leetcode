@@ -122,34 +122,8 @@ fn compile(pattern: String) -> FiniteAutomata {
 		}
 	}
 	automata.final_state = current_state;
-	println!("Final state is {}", automata.final_state);
+	//println!("Final state is {}", automata.final_state);
 	return automata;
-}
-
-fn is_match(s: String, p: String) -> bool {
-	let automata : FiniteAutomata = compile(p);
-
-	let mut current_states : Vec<StateIndex> = Vec::new();
-	let mut visited : Vec<StateIndex> = Vec::new();
-	search_next_states(&automata, automata.initial_state, &mut current_states, &mut visited);
-	println!("Current states is {:?}", current_states);
-	
-	for i in s.chars() {
-		let previous_states = current_states.clone();
-		current_states.clear();
-		for state in previous_states {
-			for next_state in automata.transition_states(state, i) {
-				visited.clear();
-				search_next_states(&automata, next_state, &mut current_states, &mut visited);
-			}
-		}
-		println!("Current states is {:?}", current_states);
-		if current_states.len() == 0 {
-			return false;
-		}
-	}
-	println!("Testing against final state {}...", automata.final_state);
-	return current_states.contains(&automata.final_state);
 }
 
 fn search_next_states(
@@ -169,6 +143,32 @@ fn search_next_states(
 			}
 		}
 	}
+}
+
+fn is_match(s: String, p: String) -> bool {
+	let automata : FiniteAutomata = compile(p);
+
+	let mut current_states : Vec<StateIndex> = Vec::new();
+	let mut visited : Vec<StateIndex> = Vec::new();
+	search_next_states(&automata, automata.initial_state, &mut current_states, &mut visited);
+	//println!("Current states is {:?}", current_states);
+	
+	for i in s.chars() {
+		let previous_states = current_states.clone();
+		current_states.clear();
+		for state in previous_states {
+			for next_state in automata.transition_states(state, i) {
+				visited.clear();
+				search_next_states(&automata, next_state, &mut current_states, &mut visited);
+			}
+		}
+		//println!("Current states is {:?}", current_states);
+		if current_states.len() == 0 {
+			return false;
+		}
+	}
+	//println!("Testing against final state {}...", automata.final_state);
+	return current_states.contains(&automata.final_state);
 }
 
 fn main() {
