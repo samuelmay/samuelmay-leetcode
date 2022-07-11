@@ -1,16 +1,17 @@
 fn max_area(height: Vec<i32>) -> i32 {
 	let mut max : i32 = 0;
-	let n : usize = height.len();
-	for i in 0..n {
-		let max_width = (n - 1 - i) as i32;
-		if height[i] * max_width <= max {
-			continue;
+	let mut j = height.len() - 1;
+	let mut i = 0;
+	while j > i {
+		let this_area = area(i,j,&height);
+		if this_area > max {
+			max = this_area;
 		}
-		for j in (i+1)..n {
-			let this_area = area(i,j,&height);
-			if this_area > max {
-				max = this_area;
-			}
+		
+		if height[i] <= height[j] {
+			i = i+1;
+		} else {
+			j = j - 1;
 		}
 	}
 	return max;
