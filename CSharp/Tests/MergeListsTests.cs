@@ -6,9 +6,11 @@ namespace Tests
     public class MergeListsTests
     {
         private MergeTwoListsSolution solution;
+        private MergeListsSolution generalSolution;
         public MergeListsTests()
         {
             solution = new MergeTwoListsSolution();
+            generalSolution = new MergeListsSolution();
         }
 
         [Test]
@@ -84,6 +86,19 @@ namespace Tests
             Assert.AreEqual(result.val, 1);
             Assert.IsNull(result.next);
 
+        }
+
+        [Test]
+        public void LeetcodeExampleKLists()
+        {
+            ListNode list1 = ListNode.FromArray(new int[] { 1, 4, 5 });
+            ListNode list2 = ListNode.FromArray(new int[] { 1, 3, 4 });
+            ListNode list3 = ListNode.FromArray(new int[] { 2, 6 });
+            ListNode[] lists = new ListNode[] { list1, list2, list3 };
+
+            ListNode result = generalSolution.MergeKLists(lists);
+            string output = result.ToString();
+            Assert.AreEqual(output, "(1,1,2,3,4,4,5,6)");
         }
         
     }

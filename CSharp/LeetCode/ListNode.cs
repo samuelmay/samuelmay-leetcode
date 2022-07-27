@@ -9,8 +9,8 @@ namespace LeetCode
     public class ListNode
     {
         public int val;
-        public ListNode? next;
-        public ListNode(int val = 0, ListNode? next = null)
+        public ListNode next;
+        public ListNode(int val = 0, ListNode next = null)
         {
             this.val = val;
             this.next = next;
@@ -21,7 +21,7 @@ namespace LeetCode
             StringBuilder output = new StringBuilder();
             output.Append('(');
             output.Append(this.val.ToString());
-            ListNode? node = this.next;
+            ListNode node = this.next;
             while (node != null)
             {
                 output.AppendFormat(",{0}", node.val);
@@ -31,14 +31,14 @@ namespace LeetCode
             return output.ToString();
         }
 
-        public static ListNode? FromArray(int[] array)
+        public static ListNode FromArray(int[] array)
         {
             if (array.Length == 0)
             {
                 return null;
             }
-            ListNode? result = new ListNode(array[0],null);
-            ListNode? tail = result;
+            ListNode result = new ListNode(array[0],null);
+            ListNode tail = result;
             for (int i = 1; i < array.Length; i++)
             {
                 tail.next = new ListNode(array[i],null);
