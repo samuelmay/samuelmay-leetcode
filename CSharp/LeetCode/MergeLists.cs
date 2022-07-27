@@ -9,32 +9,33 @@ namespace LeetCode
     public class MergeListsSolution
     {
         public ListNode MergeKLists(ListNode[] lists) {
-            if (lists.Length == 0)
+            return this.MergeKListsRecursive(new ArraySegment<ListNode>(lists));
+        }
+
+        private ListNode MergeKListsRecursive(ArraySegment<ListNode> lists) {
+            if (lists.Count == 0)
             {
                 return null;
             }
-            else if (lists.Length == 1)
+            else if (lists.Count == 1)
             {
                 return lists[0];
             }
-            else if (lists.Length == 2)
+            else if (lists.Count == 2)
             {
                 return this.MergeTwoLists(lists[0], lists[1]);
             }
             else
             {
-                int half = lists.Length / 2 + 1;
-                int otherHalf = lists.Length - half;
-                ListNode[] left = new ListNode[half];
-                ListNode[] right = new ListNode[otherHalf];
-                Array.Copy(lists, left, half);
-                Array.Copy(lists, half, right, 0, otherHalf);
+                int half = lists.Count / 2 + 1;
+                int otherHalf = lists.Count - half;
+                var left = new ArraySegment<ListNode>(lists.Array,lists.Offset,half);
+                var right = new ArraySegment<ListNode>(lists.Array,lists.Offset + half, otherHalf);
 
-                ListNode leftMerged = this.MergeKLists(left);
-                ListNode rightMerged = this.MergeKLists(right);
+                ListNode leftMerged = this.MergeKListsRecursive(left);
+                ListNode rightMerged = this.MergeKListsRecursive(right);
 
                 return this.MergeTwoLists(leftMerged, rightMerged);
-
             }
         
         }
